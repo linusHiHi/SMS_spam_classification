@@ -1,8 +1,16 @@
 # dev diary
+
+## structure
+config == 暂时没用
+dataset == 数据集的初始文件（SMSSpamCollection）
+           中间文件
+            最终文件 vectorised_sms_data.csv
+preprocess == 各种预处理脚本
+            应用顺序=cleanup ->sbert
 ## work flow
-- get data
-- clean
-- analyse data
+- get data (done)
+- clean (totally done)
+- analyse data (done)
 - divide data
 - select model
 - train model
@@ -28,4 +36,5 @@ several steps:
 - lemmatization(换回原型)
 
 ## analyse
-### *不平衡*
+### *不平衡的数据*
+
