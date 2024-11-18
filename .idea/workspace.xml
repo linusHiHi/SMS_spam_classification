@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="23d5c9fc-4ed0-47e4-b284-16d9f06d02fd" name="Changes" comment="preprocessed data,waiting for train cnn model" />
+    <list default="true" id="23d5c9fc-4ed0-47e4-b284-16d9f06d02fd" name="Changes" comment="hihihi">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dataSet/.~lock.vectorized_sms_Data.csv#" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -30,25 +33,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.cleanUp.executor": "Run",
-    "Python.main.executor": "Run",
-    "Python.sbert.executor": "Run",
-    "Python.statistics.executor": "Run",
-    "Python.txt2csv.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "/home/mia/Documents/python/ai/ai",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.cleanUp.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.sbert.executor&quot;: &quot;Run&quot;,
+    &quot;Python.statistics.executor&quot;: &quot;Run&quot;,
+    &quot;Python.txt2csv.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/mia/Documents/python/ai/ai&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/utils" />
@@ -72,6 +75,7 @@
       <updated>1731858198925</updated>
       <workItem from="1731858200239" duration="341000" />
       <workItem from="1731858551138" duration="9400000" />
+      <workItem from="1731944080642" duration="489000" />
     </task>
     <task id="LOCAL-00001" summary="preprocessed data,waiting for train cnn model">
       <option name="closed" value="true" />
@@ -81,16 +85,34 @@
       <option name="project" value="LOCAL" />
       <updated>1731868082224</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="hihihi">
+      <option name="closed" value="true" />
+      <created>1731944568086</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1731944568086</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
+    <option name="OPEN_GENERIC_TABS">
+      <map>
+        <entry key="ab387834-af9d-4904-b5c9-01bf741c4e15" value="TOOL_WINDOW" />
+      </map>
+    </option>
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+        <entry key="ab387834-af9d-4904-b5c9-01bf741c4e15">
           <value>
             <State />
           </value>
@@ -100,7 +122,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="preprocessed data,waiting for train cnn model" />
-    <option name="LAST_COMMIT_MESSAGE" value="preprocessed data,waiting for train cnn model" />
+    <MESSAGE value="hihihi" />
+    <option name="LAST_COMMIT_MESSAGE" value="hihihi" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/ai$cleanUp.coverage" NAME="cleanUp Coverage Results" MODIFIED="1731864996155" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
