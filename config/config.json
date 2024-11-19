@@ -4,14 +4,16 @@
         "dir": "/dataset",
         "original": "/source_data_set.txt",
         "original_csv": "/source_data_set.csv",
-        "cleaned_csv": "/cleaned_data_set.csv",
         "vectorized_csv": "/vectorized_data_set.csv"
     },
     "data": {
         "tag_name": "Label",
         "text_name": "Message"
     },
-    "cleanup":{
+    "cleanup": {
         "stop_words_language": "english"
-    }
+    },
+    "model": "paraphrase-MiniLM-L6-v2",
+    "pca": "True",
+    "pca_dim": 50
 }
