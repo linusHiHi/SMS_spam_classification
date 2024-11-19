@@ -4,13 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="23d5c9fc-4ed0-47e4-b284-16d9f06d02fd" name="Changes" comment="hihihi">
-      <change afterPath="$PROJECT_DIR$/config/backup/config.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config/modify.py" afterDir="false" />
+    <list default="true" id="23d5c9fc-4ed0-47e4-b284-16d9f06d02fd" name="Changes" comment="config finish">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/config.json" beforeDir="false" afterPath="$PROJECT_DIR$/config/config.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataSet/SMSSpamCollection" beforeDir="false" afterPath="$PROJECT_DIR$/dataSet/source_data_set.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/preprocess/txt2csv.py" beforeDir="false" afterPath="$PROJECT_DIR$/preprocess/txt2csv.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/preprocess/cleanUp.py" beforeDir="false" afterPath="$PROJECT_DIR$/preprocess/cleanUp.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/preprocess/sbert.py" beforeDir="false" afterPath="$PROJECT_DIR$/preprocess/sbert.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -98,7 +96,7 @@
       <workItem from="1731858200239" duration="341000" />
       <workItem from="1731858551138" duration="9400000" />
       <workItem from="1731944080642" duration="5759000" />
-      <workItem from="1731988198793" duration="4144000" />
+      <workItem from="1731988198793" duration="5890000" />
     </task>
     <task id="LOCAL-00001" summary="preprocessed data,waiting for train cnn model">
       <option name="closed" value="true" />
@@ -132,7 +130,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731945560088</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="config finish">
+      <option name="closed" value="true" />
+      <created>1731994419948</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1731994419948</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -162,7 +168,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="preprocessed data,waiting for train cnn model" />
     <MESSAGE value="hihihi" />
-    <option name="LAST_COMMIT_MESSAGE" value="hihihi" />
+    <MESSAGE value="config finish" />
+    <option name="LAST_COMMIT_MESSAGE" value="config finish" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

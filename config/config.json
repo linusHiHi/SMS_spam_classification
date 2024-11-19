@@ -6,5 +6,12 @@
         "original_csv": "/source_data_set.csv",
         "cleaned_csv": "/cleaned_data_set.csv",
         "vectorized_csv": "/vectorized_data_set.csv"
+    },
+    "data": {
+        "tag_name": "Label",
+        "text_name": "Message"
+    },
+    "cleanup":{
+        "stop_words_language": "english"
     }
 }
