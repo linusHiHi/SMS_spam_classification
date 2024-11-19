@@ -1,7 +1,7 @@
 import csv
 
 # Parse the .txt file
-file_path = "../dataSet/SMSSpamCollection"
+file_path = "../dataSet/source_data_set.txt"
 output_csv = "../dataSet/sms_data.csv"
 
 with open(file_path, "r", encoding="utf-8") as file:

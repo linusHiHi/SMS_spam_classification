@@ -1,0 +1,10 @@
+{
+  "root": "",
+  "dataset":
+  {
+    "original": "source_data_set.txt",
+    "original_csv": "source_data_set.csv",
+    "cleaned_csv": "cleaned_data_set.csv",
+   "vectorized_csv": "vectorized_data_set.csv"
+  }
+}
