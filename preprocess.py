@@ -12,10 +12,13 @@ with open(config_path, "r") as f:
 txtPath = config["root"]+ config["dataset"]["dir"]+config["dataset"]["original"]
 sourceDataPath = config["root"]+ config["dataset"]["dir"]+config["dataset"]["original_csv"]
 desDataPath = config["root"]+ config["dataset"]["dir"]+config["dataset"]["vectorized_csv"]
+
+print("start preprocessing...")
 try:
     with open(sourceDataPath,'r') as f:
         df = pd.read_csv(f)
 except FileNotFoundError:
+    print("source csv data not found.trying txt.")
     txt2csv(txtPath,sourceDataPath)
     with open(sourceDataPath, 'r') as f:
         df = pd.read_csv(f)

@@ -10,8 +10,10 @@
         "tag_name": "Label",
         "text_name": "Message"
     },
-    "cleanup":{
+    "cleanup": {
         "stop_words_language": "english"
     },
-    "model": "paraphrase-MiniLM-L6-v2"
+    "model": "paraphrase-MiniLM-L6-v2",
+    "pca": "True",
+    "pca_dim": 50
 }
