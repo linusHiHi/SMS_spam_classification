@@ -1,7 +1,7 @@
-import tensorflow as ts
-import keras
+from keras import Sequential
+from keras.src.layers import Conv1D, MaxPooling1D, Dropout, Flatten, Dense
 
-model = keras.models.Sequential([
+model = Sequential([
     Conv1D(filters=32, kernel_size=3, activation='relu', input_shape=(128, 1)),
     MaxPooling1D(pool_size=2),
     Dropout(0.3),
