@@ -8,12 +8,13 @@ dataset == 数据集的初始文件（SMSSpamCollection）
 preprocess == 各种预处理脚本
             应用顺序=cleanup ->sbert
 ## work flow
-- get data (done)
-- clean (totally done)
-- analyse data (done)
-- divide data
-- select model
-- train model
+* preprocess
+* * get data (done)
+* * clean (totally done)
+* * analyse data (done)
+* divide data
+* select model
+* train model
 
 ## get data
 I downloaded data set form ucl machine learning repo.  
@@ -37,4 +38,7 @@ several steps:
 
 ## analyse
 ### *不平衡的数据*
+Number of all messages: 5574
+Number of ham messages: 4827
+Number of spam messages: 747
 
