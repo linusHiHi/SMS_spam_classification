@@ -19,8 +19,8 @@ config_path = "./config/config.json"
 with open(config_path, "r") as f:
     config = json.load(f)
 sourceDataSet = config["root"]+ config["dataset"]["dir"]+config["dataset"]["cleaned_pickle"]
-tag = config["dataset"]["tag_name"]
-message=config["dataset"]["text_name"]
+tag = config["data"]["tag_name"]
+message=config["data"]["text_name"]
 if config["pca"]:
     dim = config["pca_dim"]
 else:
@@ -28,12 +28,14 @@ else:
 
 df = pd.read_pickle(sourceDataSet)
 
-X = df.iloc[:, 1:].values  # Feature vectors,50 dimensions
-y = df.iloc[:, 0].values   # Labels (e.g., spam/ham)
+X = df[message]  # Feature vectors,50 dimensions
+y = df[tag]  # Labels (e.g., spam/ham)
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-X_train = X_train[..., np.newaxis]  # Shape: (num_samples, 50, 1)
-X_test = X_test[..., np.newaxis]    # Shape: (num_samples, 50, 1)
+# X_train = X_train[..., np.newaxis]  # Shape: (num_samples, 50, 1)
+# X_test = X_test[..., np.newaxis]    # Shape: (num_samples, 50, 1)
+# y_train = y_train[..., np.newaxis]  # Shape: (num_samples, 50, 1)
+# y_test = y_test[..., np.newaxis]    # Shape: (num_samples, 50, 1)
 
 
 
@@ -101,7 +103,7 @@ for epoch in range(num_epochs):
         embeddings, labels = embeddings.to(device), labels.to(device)
 
         # 前向传播
-        outputs = model(embeddings.unsqueeze(1))  # 加入 seq_len 维度
+        outputs = model(embeddings)
         loss = criterion(outputs, labels)
 
         # 反向传播和优化
