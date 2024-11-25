@@ -39,18 +39,19 @@ X_test = X_test[..., np.newaxis]    # Shape: (num_samples, 50, 1)
 
 # 示例数据集
 class TextDataset(Dataset):
-    def __init__(self, data_framework:pandas.DataFrame,embedder_for_sentences):
-        self.data_framework = data_framework
+    def __init__(self, X, y,embedder_for_sentences):
+        self.X = X
+        self.y = y
         self.embedder_for_sentences = embedder_for_sentences
 
     def __len__(self):
-        return len(self.data_framework)
+        return len(self.X)
 
     def __getitem__(self, idx):
         # Sentence embedding
-        sentences = self.data_framework[message][idx]
+        sentences = self.X[idx]
         embedding = self.embedder_for_sentences.encode(sentences)
-        label = self.data_framework[tag][idx]
+        label = self.y[idx]
         return torch.tensor(embedding, dtype=torch.float32), torch.tensor(label, dtype=torch.long)
 
 # 定义 RNN + 分类模型
@@ -76,7 +77,7 @@ embedder = SentenceTransformer('paraphrase-MiniLM-L6-v2')  # 你可以选择其�
 # labels = [1, 0, 1, 0]  # 1: Positive, 0: Negative
 
 # 创建数据集和数据加载器
-dataset = TextDataset(df, embedder)
+dataset = TextDataset(X_train, y_train, embedder)
 dataloader = DataLoader(dataset, batch_size=2, shuffle=True)
 
 # 模型超参数
