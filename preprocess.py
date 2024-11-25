@@ -11,7 +11,7 @@ with open(config_path, "r") as f:
 
 txtPath = config["root"]+ config["dataset"]["dir"]+config["dataset"]["original"]
 sourceDataPath = config["root"]+ config["dataset"]["dir"]+config["dataset"]["original_csv"]
-desDataPath = config["root"]+ config["dataset"]["dir"]+config["dataset"]["vectorized_csv"]
+desDataPath = config["root"]+ config["dataset"]["dir"]+config["dataset"]["cleaned_csv"]
 
 print("start preprocessing...")
 try:
@@ -28,11 +28,16 @@ print("cleanup\n")
 cleanup = CleanUp()
 df = cleanup.cleanup(df,config["data"]["text_name"])
 
+'''
+qwqqwqwqw
+'''
 print("vector\n")
 #vectorize
-myModel = Sbert(config["model"],pca=bool(config["pca"]),pca_dim=config["pca_dim"])
-df = myModel.vectorize_df(df, config["data"]["text_name"])
+# qwq = False if config["pca"]=="False" else True
+# myModel = Sbert(config["model"],pca=qwq,pca_dim=config["pca_dim"])
+# df = myModel.vectorize_df(df, config["data"]["text_name"])
 
+df[config["data"]["tag_name"]] = df[config["data"]["tag_name"]].map({'spam': config["data"]["code_name"]["spam"], 'ham': config["data"]["code_name"]["ham"]})
 print("write\n")
-with open(config["root"]+ config["dataset"]["dir"]+config["dataset"]["vectorized_csv"],'w') as f:
+with open(desDataPath,'w') as f:
     df.to_csv(f, index=False)
