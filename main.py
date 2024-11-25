@@ -33,26 +33,28 @@ df = pd.read_pickle(sourceDataSet)
 X = df[message]  # Feature vectors,50 dimensions
 y = df[tag]  # Labels (e.g., spam/ham)
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+embedder = SentenceTransformer('paraphrase-MiniLM-L6-v2')
+# Precompute embeddings for the dataset
+X_train_embeddings = torch.tensor(embedder.encode(X_train.tolist()), dtype=torch.float32)
+y_train_tensor = torch.tensor(y_train.values, dtype=torch.long)
 
-# 数据集
+# Update Dataset Class
 class TextDataset(Dataset):
-    def __init__(self, X, y,embedder_for_sentences):
-        self.X = X
-        self.y = y
-        self.embedder_for_sentences = embedder_for_sentences
+    def __init__(self, embeddings, labels):
+        self.embeddings = embeddings
+        self.labels = labels
 
     def __len__(self):
-        return len(self.X)
+        return len(self.embeddings)
 
     def __getitem__(self, idx):
-        # Sentence embedding
-        sentences = self.X[idx]
-        embedding = self.embedder_for_sentences.encode(sentences)
-        label = self.y[idx]
-        dic = (torch.tensor(embedding, dtype=torch.float32),(torch.tensor(label, dtype=torch.long)))
-        return dic
+        return self.embeddings[idx], self.labels[idx]
 
-# 定义 RNN + 分类模型
+# Initialize dataset and dataloader
+dataset = TextDataset(X_train_embeddings, y_train_tensor)
+dataloader = DataLoader(dataset, batch_size=2, shuffle=True)
+
+# Define RNN Model
 class RNNClassifier(nn.Module):
     def __init__(self, input_size, hidden_size, num_layers, num_classes):
         super(RNNClassifier, self).__init__()
@@ -60,54 +62,87 @@ class RNNClassifier(nn.Module):
         self.fc = nn.Linear(hidden_size, num_classes)
 
     def forward(self, x):
-        # x shape: (batch_size, seq_len, input_size)
         out, (hidden, _) = self.rnn(x)  # hidden shape: (num_layers, batch_size, hidden_size)
-        out = hidden[-1]  # shape: (batch_size, hidden_size)
-        out = self.fc(out)
+        out = hidden[-1]  # Take the last layer's hidden state
+        out = self.fc(out)  # Output layer
         return out
 
-# 初始化 Sentence Transformer
-embedder = SentenceTransformer('paraphrase-MiniLM-L6-v2')  # 你可以选择其他预训练模型
-
-# 创建数据集和数据加载器
-dataset = TextDataset(X_train, y_train, embedder)
-dataloader = DataLoader(dataset, batch_size=2, shuffle=True)
-
-# 模型超参数
-input_size = 384  # SentenceTransformer 的默认输出维度
+# Model initialization
+input_size = 384  # SentenceTransformer embedding size
 hidden_size = 128
 num_layers = 1
 num_classes = 2
 
-# 初始化模型
 model = RNNClassifier(input_size, hidden_size, num_layers, num_classes).to(device)
 
-# 损失函数和优化器
+# Loss and optimizer
 criterion = nn.CrossEntropyLoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
 
-# 训练模型
+# Training Loop
 num_epochs = 5
 for epoch in range(num_epochs):
-    # model.train()
+    model.train()
     for batch in dataloader:
         embeddings, labels = batch
         embeddings, labels = embeddings.to(device), labels.to(device)
 
-        # 前向传播
-        outputs = model(embeddings)
+        # Forward pass
+        outputs = model(embeddings.unsqueeze(1))  # Add seq_len dimension
         loss = criterion(outputs, labels)
 
-        # 反向传播和优化
+        # Backward and optimize
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
 
-# 测试模型
+# Testing
+from sklearn.metrics import classification_report, confusion_matrix
+
+# Model evaluation
+# Precompute embeddings for the test set
+X_test_embeddings = torch.tensor(embedder.encode(X_test.tolist()), dtype=torch.float32)
+y_test_tensor = torch.tensor(y_test.values, dtype=torch.long)
+
+# Create test dataset and dataloader
+test_dataset = TextDataset(X_test_embeddings, y_test_tensor)
+test_dataloader = DataLoader(test_dataset, batch_size=2, shuffle=False)
+
+# Model evaluation on the test set
 model.eval()
 with torch.no_grad():
-    test_sentence = "This film is wonderful"
-    test_embedding = torch.tensor(embedder.encode(test_sentence), dtype=torch.float32).unsqueeze(0).to(device)
-    output = model(test_embedding.unsqueeze(1))  # 加入 seq_len 维度
-    prediction = torch.argmax(output, dim=1).item()
-    print(f"Prediction for '{test_sentence}': {'Positive' if prediction == 1 else 'Negative'}")
+    y_true = []
+    y_pred = []
+    for batch in test_dataloader:
+        embeddings, labels = batch
+        embeddings, labels = embeddings.to(device), labels.to(device)
+
+        # Forward pass
+        outputs = model(embeddings.unsqueeze(1))  # Add seq_len dimension
+        _, predicted = torch.max(outputs, 1)
+
+        # Store true and predicted labels
+        y_true.extend(labels.cpu().numpy())
+        y_pred.extend(predicted.cpu().numpy())
+
+# Classification report
+print("Classification Report on Test Set:")
+print(classification_report(y_true, y_pred))
+
+# Optionally, manually calculate metrics
+cm = confusion_matrix(y_true, y_pred)
+tp = cm[1, 1]  # True Positive
+tn = cm[0, 0]  # True Negative
+fp = cm[0, 1]  # False Positive
+fn = cm[1, 0]  # False Negative
+
+# Calculate Precision, Recall, F1-Score
+precision = tp / (tp + fp) if (tp + fp) != 0 else 0
+recall = tp / (tp + fn) if (tp + fn) != 0 else 0
+f1_score = 2 * (precision * recall) / (precision + recall) if (precision + recall) != 0 else 0
+
+# Print the results
+print(f"\nManual Calculation Metrics on Test Set:")
+print(f"Precision: {precision:.4f}")
+print(f"Recall: {recall:.4f}")
+print(f"F1-Score: {f1_score:.4f}")
