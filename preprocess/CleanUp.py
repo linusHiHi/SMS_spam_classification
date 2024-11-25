@@ -5,9 +5,18 @@ from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
 import nltk
 from nltk.tokenize import sent_tokenize
-
+max_sentence_length = 26
 def rm_punctuation_from_list(df_list):
     return list((re.sub(r'[^\w\s]', '', sent)) for sent in df_list)
+
+def rm_null_from_list(df_list):
+    return list(sent for sent in df_list if sent != '')
+
+def add_null_from_list(df_list):
+    lendf = len(df_list)
+    for i in range(max_sentence_length-lendf):
+        df_list.append([''])
+    return df_list
 
 def token_sentence(text):
 
@@ -42,16 +51,18 @@ class CleanUp:
         # df[dataTag] = df[dataTag].str.replace(r"\d+", "numbers", regex=True)
 
         # Remove URLs
-        df[dataTag] = df[dataTag].str.replace(r"http\S+|www\S+", "urls", regex=True)
+        df[dataTag] = df[dataTag].str.replace(r"http\S+|www\S+", " urls ", regex=True)
 
         # Remove extra whitespace
         df[dataTag] = df[dataTag].str.strip()
+
         df[dataTag] = df[dataTag].apply(self.remove_stopwords)
         df[dataTag] = df[dataTag].apply(self.lemmatize_text)
         df[dataTag] = df[dataTag].apply(token_sentence)
         # Remove punctuation
         df[dataTag] = df[dataTag].map(rm_punctuation_from_list)
-
+        # df[dataTag] = df[dataTag].map(rm_null_from_list)
+        df[dataTag] = df[dataTag].map(add_null_from_list)
 
 
         return df

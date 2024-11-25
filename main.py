@@ -54,7 +54,8 @@ class TextDataset(Dataset):
         sentences = self.X[idx]
         embedding = self.embedder_for_sentences.encode(sentences)
         label = self.y[idx]
-        return torch.tensor(embedding, dtype=torch.float32), torch.tensor(label, dtype=torch.long)
+        dic = [torch.tensor(embedding, dtype=torch.float32),(torch.tensor(label, dtype=torch.long))]
+        return dic
 
 # 定义 RNN + 分类模型
 class RNNClassifier(nn.Module):
