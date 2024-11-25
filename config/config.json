@@ -4,7 +4,8 @@
         "dir": "/dataset",
         "original": "/source_data_set.txt",
         "original_csv": "/source_data_set.csv",
-        "cleaned_csv": "/cleaned_data_set.csv"
+        "cleaned_csv": "/cleaned_data_set.csv",
+        "cleaned_pickle": "/cleaned_data_set.pkl"
     },
     "data": {
         "tag_name": "Label",

@@ -1,6 +1,7 @@
 import json
 
 import numpy as np
+import pandas
 # import optuna
 import pandas as pd
 from sklearn.model_selection import train_test_split
@@ -17,15 +18,15 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 config_path = "./config/config.json"
 with open(config_path, "r") as f:
     config = json.load(f)
-sourceDataSet = config["root"]+ config["dataset"]["dir"]+config["dataset"]["cleaned_csv"]
-
+sourceDataSet = config["root"]+ config["dataset"]["dir"]+config["dataset"]["cleaned_pickle"]
+tag = config["dataset"]["tag_name"]
+message=config["dataset"]["text_name"]
 if config["pca"]:
     dim = config["pca_dim"]
 else:
     dim = config["un_pca_dim"]
 
-with open(sourceDataSet, "r") as f:
-    df = pd.read_csv(f)
+df = pd.read_pickle(sourceDataSet)
 
 X = df.iloc[:, 1:].values  # Feature vectors,50 dimensions
 y = df.iloc[:, 0].values   # Labels (e.g., spam/ham)
@@ -38,19 +39,18 @@ X_test = X_test[..., np.newaxis]    # Shape: (num_samples, 50, 1)
 
 # 示例数据集
 class TextDataset(Dataset):
-    def __init__(self, sentences, labels, embedder):
-        self.sentences = sentences
-        self.labels = labels
-        self.embedder = embedder
+    def __init__(self, data_framework:pandas.DataFrame,embedder_for_sentences):
+        self.data_framework = data_framework
+        self.embedder_for_sentences = embedder_for_sentences
 
     def __len__(self):
-        return len(self.sentences)
+        return len(self.data_framework)
 
     def __getitem__(self, idx):
         # Sentence embedding
-        sentence = self.sentences[idx]
-        embedding = self.embedder.encode(sentence)
-        label = self.labels[idx]
+        sentences = self.data_framework[message][idx]
+        embedding = self.embedder_for_sentences.encode(sentences)
+        label = self.data_framework[tag][idx]
         return torch.tensor(embedding, dtype=torch.float32), torch.tensor(label, dtype=torch.long)
 
 # 定义 RNN + 分类模型
@@ -69,14 +69,14 @@ class RNNClassifier(nn.Module):
         return out
 
 # 初始化 Sentence Transformer
-embedder = SentenceTransformer('all-MiniLM-L6-v2')  # 你可以选择其他预训练模型
+embedder = SentenceTransformer('paraphrase-MiniLM-L6-v2')  # 你可以选择其他预训练模型
 
 # 示例数据
 # sentences = ["This is a good movie", "This is a bad movie", "I love this film", "I hate this film"]
 # labels = [1, 0, 1, 0]  # 1: Positive, 0: Negative
 
 # 创建数据集和数据加载器
-dataset = TextDataset(X, y, embedder)
+dataset = TextDataset(df, embedder)
 dataloader = DataLoader(dataset, batch_size=2, shuffle=True)
 
 # 模型超参数
